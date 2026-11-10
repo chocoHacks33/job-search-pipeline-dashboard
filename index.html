@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A focused dashboard for tracking job applications and interviews." />
+    <title>Job Search Pipeline</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Career dashboard</p>
+        <h1>Job search pipeline</h1>
+        <p class="subtitle">A calm view of applications, conversations, and momentum.</p>
+      </div>
+      <p class="as-of" id="as-of"></p>
+    </header>
+
+    <main>
+      <section aria-labelledby="summary-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Overview</p>
+            <h2 id="summary-heading">Pipeline health</h2>
+          </div>
+        </div>
+        <div class="summary-grid" id="summary-grid"></div>
+      </section>
+
+      <section aria-labelledby="pipeline-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Applications</p>
+            <h2 id="pipeline-heading">Current opportunities</h2>
+          </div>
+        </div>
+        <div class="pipeline" id="pipeline"></div>
+      </section>
+    </main>
+
+    <template id="application-card-template">
+      <article class="application-card">
+        <div>
+          <p class="card-company"></p>
+          <h3 class="card-role"></h3>
+        </div>
+        <dl class="card-details">
+          <div><dt>Location</dt><dd class="card-location"></dd></div>
+          <div><dt>Updated</dt><dd class="card-updated"></dd></div>
+        </dl>
+      </article>
+    </template>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
