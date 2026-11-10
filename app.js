@@ -6,10 +6,12 @@ import {
   stageOrder,
   summarizeApplications
 } from "./lib/dashboard.js";
+import { filterApplicationsByStage } from "./lib/filters.js";
 
 const summaryGrid = document.querySelector("#summary-grid");
 const pipeline = document.querySelector("#pipeline");
 const cardTemplate = document.querySelector("#application-card-template");
+const stageFilter = document.querySelector("#stage-filter");
 
 function renderSummary() {
   const summary = summarizeApplications(applications);
@@ -43,10 +45,12 @@ function renderApplicationCard(application) {
   return fragment;
 }
 
-function renderPipeline() {
-  const groupedApplications = groupApplicationsByStage(applications);
+function renderPipeline(selectedStage = "all") {
+  const visibleApplications = filterApplicationsByStage(applications, selectedStage);
+  const groupedApplications = groupApplicationsByStage(visibleApplications);
+  const visibleStages = selectedStage === "all" ? stageOrder : [selectedStage];
   pipeline.replaceChildren(
-    ...stageOrder.map((stage) => {
+    ...visibleStages.map((stage) => {
       const column = document.createElement("section");
       column.className = "stage-column";
       column.dataset.stage = stage;
@@ -58,6 +62,8 @@ function renderPipeline() {
     })
   );
 }
+
+stageFilter.addEventListener("change", () => renderPipeline(stageFilter.value));
 
 document.querySelector("#as-of").textContent = `Updated ${new Intl.DateTimeFormat("en-SG", {
   dateStyle: "medium"
