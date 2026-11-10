@@ -6,10 +6,12 @@ import {
   stageOrder,
   summarizeApplications
 } from "./lib/dashboard.js";
+import { createInterviewCalendar, downloadCalendar } from "./lib/calendar.js";
 
 const summaryGrid = document.querySelector("#summary-grid");
 const pipeline = document.querySelector("#pipeline");
 const cardTemplate = document.querySelector("#application-card-template");
+const calendarExport = document.querySelector("#calendar-export");
 
 function renderSummary() {
   const summary = summarizeApplications(applications);
@@ -33,6 +35,10 @@ function renderSummary() {
     })
   );
 }
+
+calendarExport.addEventListener("click", () => {
+  downloadCalendar(createInterviewCalendar(applications), "job-interviews.ics");
+});
 
 function renderApplicationCard(application) {
   const fragment = cardTemplate.content.cloneNode(true);

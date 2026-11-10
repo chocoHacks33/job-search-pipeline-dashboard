@@ -5,6 +5,6 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "check": "node --check app.js && node --check data.js && node --check lib/dashboard.js"
+    "check": "node --check app.js && node --check data.js && node --check lib/dashboard.js && node --check lib/calendar.js"
   }
 }
