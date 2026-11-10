@@ -6,6 +6,7 @@ import {
   stageOrder,
   summarizeApplications
 } from "./lib/dashboard.js";
+import { renderFollowUpReminders } from "./widgets/follow-ups.js";
 
 const summaryGrid = document.querySelector("#summary-grid");
 const pipeline = document.querySelector("#pipeline");
@@ -64,4 +65,5 @@ document.querySelector("#as-of").textContent = `Updated ${new Intl.DateTimeForma
 }).format(new Date())}`;
 
 renderSummary();
+renderFollowUpReminders(document.querySelector("#follow-up-reminders"), applications);
 renderPipeline();

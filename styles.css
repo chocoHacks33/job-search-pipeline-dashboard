@@ -77,6 +77,23 @@ main > section + section { margin-top: 2.75rem; }
 .metric-card strong { font-size: 2rem; letter-spacing: -0.04em; }
 .metric-card span { color: #63708a; font-size: 0.9rem; }
 
+.reminder-list { display: grid; gap: 0.65rem; margin: 0; padding: 0; list-style: none; }
+.reminder-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.1rem;
+  border: 1px solid #dfe5f0;
+  border-radius: 0.9rem;
+  background: #fff;
+}
+.reminder-item strong { display: block; margin-bottom: 0.2rem; }
+.reminder-item span { color: #63708a; font-size: 0.82rem; }
+.reminder-due { flex: 0 0 auto; padding: 0.35rem 0.55rem; border-radius: 999px; background: #e9edff; color: #2945d6 !important; font-weight: 800; }
+.reminder-due[data-urgency="overdue"] { background: #ffebe9; color: #b42318 !important; }
+.empty-reminders { margin: 0; padding: 1.25rem; border: 1px dashed #cad3e3; border-radius: 0.9rem; color: #63708a; }
+
 .pipeline {
   display: grid;
   grid-template-columns: repeat(5, minmax(210px, 1fr));
