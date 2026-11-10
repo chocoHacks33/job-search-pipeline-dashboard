@@ -77,6 +77,23 @@ main > section + section { margin-top: 2.75rem; }
 .metric-card strong { font-size: 2rem; letter-spacing: -0.04em; }
 .metric-card span { color: #63708a; font-size: 0.9rem; }
 
+.insight-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(9rem, 0.6fr));
+  gap: 1rem;
+  align-items: center;
+  padding: 1.35rem;
+  border: 1px solid #dfe5f0;
+  border-radius: 1.15rem;
+  background: linear-gradient(135deg, #162a55, #253f78);
+  color: #fff;
+}
+
+.insight-panel p { margin-bottom: 0; color: #ced8f1; line-height: 1.55; }
+.insight-stat { display: grid; gap: 0.25rem; }
+.insight-stat strong { font-size: 1.45rem; }
+.insight-stat span { color: #bac7e5; font-size: 0.78rem; }
+
 .pipeline {
   display: grid;
   grid-template-columns: repeat(5, minmax(210px, 1fr));
@@ -109,6 +126,7 @@ main > section + section { margin-top: 2.75rem; }
 @media (max-width: 760px) {
   .site-header { align-items: start; flex-direction: column; padding-top: 2.25rem; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .insight-panel { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 440px) {
