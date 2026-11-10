@@ -6,10 +6,12 @@ import {
   stageOrder,
   summarizeApplications
 } from "./lib/dashboard.js";
+import { createApplicationsCsv, downloadCsv } from "./lib/csv.js";
 
 const summaryGrid = document.querySelector("#summary-grid");
 const pipeline = document.querySelector("#pipeline");
 const cardTemplate = document.querySelector("#application-card-template");
+const csvExport = document.querySelector("#csv-export");
 
 function renderSummary() {
   const summary = summarizeApplications(applications);
@@ -33,6 +35,10 @@ function renderSummary() {
     })
   );
 }
+
+csvExport.addEventListener("click", () => {
+  downloadCsv(createApplicationsCsv(applications), "job-applications.csv");
+});
 
 function renderApplicationCard(application) {
   const fragment = cardTemplate.content.cloneNode(true);
