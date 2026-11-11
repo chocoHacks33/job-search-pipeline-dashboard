@@ -2,6 +2,7 @@ import { applications } from "./data.js";
 import {
   formatShortDate,
   groupApplicationsByStage,
+  sortApplications,
   stageLabels,
   stageOrder,
   summarizeApplications
@@ -10,6 +11,7 @@ import {
 const summaryGrid = document.querySelector("#summary-grid");
 const pipeline = document.querySelector("#pipeline");
 const cardTemplate = document.querySelector("#application-card-template");
+const sortControl = document.querySelector("#application-sort");
 
 function renderSummary() {
   const summary = summarizeApplications(applications);
@@ -44,7 +46,9 @@ function renderApplicationCard(application) {
 }
 
 function renderPipeline() {
-  const groupedApplications = groupApplicationsByStage(applications);
+  const groupedApplications = groupApplicationsByStage(
+    sortApplications(applications, sortControl.value)
+  );
   pipeline.replaceChildren(
     ...stageOrder.map((stage) => {
       const column = document.createElement("section");
@@ -65,3 +69,5 @@ document.querySelector("#as-of").textContent = `Updated ${new Intl.DateTimeForma
 
 renderSummary();
 renderPipeline();
+
+sortControl.addEventListener("change", renderPipeline);
