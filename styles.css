@@ -77,6 +77,54 @@ main > section + section { margin-top: 2.75rem; }
 .metric-card strong { font-size: 2rem; letter-spacing: -0.04em; }
 .metric-card span { color: #63708a; font-size: 0.9rem; }
 
+.activity-card {
+  padding: 1.25rem;
+  border: 1px solid #dfe5f0;
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 18px 45px rgba(46, 64, 105, 0.06);
+}
+
+.activity-summary {
+  margin-bottom: 1.25rem;
+  color: #63708a;
+  font-size: 0.88rem;
+}
+
+.activity-chart {
+  display: grid;
+  grid-template-columns: repeat(14, minmax(2.5rem, 1fr));
+  gap: 0.6rem;
+  min-height: 10rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+}
+
+.activity-day {
+  display: grid;
+  grid-template-rows: 6.5rem auto auto;
+  gap: 0.3rem;
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.activity-bar-track {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  border-radius: 0.55rem;
+  background: #edf1f7;
+}
+
+.activity-bar {
+  width: 100%;
+  border-radius: 0.55rem;
+  background: linear-gradient(180deg, #6f83ff, #3d5afe);
+}
+
+.activity-day strong { font-size: 0.82rem; }
+.activity-date { color: #7b869d; font-size: 0.66rem; white-space: nowrap; }
+
 .pipeline {
   display: grid;
   grid-template-columns: repeat(5, minmax(210px, 1fr));
