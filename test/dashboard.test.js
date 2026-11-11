@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 
 import {
   formatShortDate,
+  getApplicationUpdateSignal,
   groupApplicationsByStage,
   summarizeApplications
 } from "../lib/dashboard.js";
@@ -44,4 +45,29 @@ test("groupApplicationsByStage creates every dashboard column", () => {
 
 test("formatShortDate returns a concise local date", () => {
   assert.equal(formatShortDate("2026-11-09", "en-SG"), "9 Nov");
+});
+
+test("getApplicationUpdateSignal flags active applications after seven days", () => {
+  assert.deepEqual(
+    getApplicationUpdateSignal(
+      { status: "applied", updatedAt: "2026-11-02" },
+      "2026-11-11T18:00:00Z"
+    ),
+    {
+      days: 9,
+      needsAttention: true,
+      label: "Updated 9 days ago · Follow up"
+    }
+  );
+});
+
+test("getApplicationUpdateSignal does not flag settled applications", () => {
+  const signal = getApplicationUpdateSignal(
+    { status: "rejected", updatedAt: "2026-10-27" },
+    "2026-11-11T00:00:00Z"
+  );
+
+  assert.equal(signal.days, 15);
+  assert.equal(signal.needsAttention, false);
+  assert.equal(signal.label, "Updated 15 days ago");
 });

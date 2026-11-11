@@ -106,6 +106,22 @@ main > section + section { margin-top: 2.75rem; }
 .card-details dt { color: #7b869d; }
 .card-details dd { text-align: right; }
 
+.card-age {
+  width: fit-content;
+  margin: 0;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  background: #eef2f8;
+  color: #596781;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.card-age--stale {
+  background: #fff1df;
+  color: #8a4b08;
+}
+
 @media (max-width: 760px) {
   .site-header { align-items: start; flex-direction: column; padding-top: 2.25rem; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
