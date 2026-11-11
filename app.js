@@ -1,6 +1,7 @@
 import { applications } from "./data.js";
 import {
   formatShortDate,
+  getApplicationUpdateSignal,
   groupApplicationsByStage,
   stageLabels,
   stageOrder,
@@ -40,6 +41,10 @@ function renderApplicationCard(application) {
   fragment.querySelector(".card-role").textContent = application.role;
   fragment.querySelector(".card-location").textContent = application.location;
   fragment.querySelector(".card-updated").textContent = formatShortDate(application.updatedAt);
+  const updateSignal = getApplicationUpdateSignal(application);
+  const age = fragment.querySelector(".card-age");
+  age.textContent = updateSignal.label;
+  age.classList.toggle("card-age--stale", updateSignal.needsAttention);
   return fragment;
 }
 
