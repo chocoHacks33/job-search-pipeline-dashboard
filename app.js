@@ -1,5 +1,6 @@
 import { applications } from "./data.js";
 import {
+  buildApplicationActivity,
   formatShortDate,
   groupApplicationsByStage,
   stageLabels,
@@ -8,6 +9,8 @@ import {
 } from "./lib/dashboard.js";
 
 const summaryGrid = document.querySelector("#summary-grid");
+const activityChart = document.querySelector("#application-activity");
+const activitySummary = document.querySelector("#activity-summary");
 const pipeline = document.querySelector("#pipeline");
 const cardTemplate = document.querySelector("#application-card-template");
 
@@ -43,6 +46,41 @@ function renderApplicationCard(application) {
   return fragment;
 }
 
+function renderApplicationActivity() {
+  const activity = buildApplicationActivity(applications);
+  const maximum = Math.max(...activity.map(({ count }) => count), 1);
+  const total = activity.reduce((sum, { count }) => sum + count, 0);
+
+  activitySummary.textContent = `${total} application${total === 1 ? "" : "s"} added during this window.`;
+  activityChart.replaceChildren(
+    ...activity.map(({ label, count }) => {
+      const day = document.createElement("div");
+      day.className = "activity-day";
+      day.setAttribute("role", "listitem");
+      day.setAttribute(
+        "aria-label",
+        `${label}: ${count} application${count === 1 ? "" : "s"}`
+      );
+
+      const barTrack = document.createElement("span");
+      barTrack.className = "activity-bar-track";
+      const bar = document.createElement("span");
+      bar.className = "activity-bar";
+      bar.style.height = `${count ? Math.max(12, (count / maximum) * 100) : 0}%`;
+      barTrack.append(bar);
+
+      const date = document.createElement("span");
+      date.className = "activity-date";
+      date.textContent = label;
+      const value = document.createElement("strong");
+      value.textContent = count;
+
+      day.append(barTrack, value, date);
+      return day;
+    })
+  );
+}
+
 function renderPipeline() {
   const groupedApplications = groupApplicationsByStage(applications);
   pipeline.replaceChildren(
@@ -64,4 +102,5 @@ document.querySelector("#as-of").textContent = `Updated ${new Intl.DateTimeForma
 }).format(new Date())}`;
 
 renderSummary();
+renderApplicationActivity();
 renderPipeline();

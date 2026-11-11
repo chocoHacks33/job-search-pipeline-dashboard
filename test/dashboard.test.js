@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  buildApplicationActivity,
   formatShortDate,
   groupApplicationsByStage,
   summarizeApplications
@@ -44,4 +45,26 @@ test("groupApplicationsByStage creates every dashboard column", () => {
 
 test("formatShortDate returns a concise local date", () => {
   assert.equal(formatShortDate("2026-11-09", "en-SG"), "9 Nov");
+});
+
+test("buildApplicationActivity creates a continuous daily series", () => {
+  const applications = [
+    { appliedAt: "2026-11-08" },
+    { appliedAt: "2026-11-10" },
+    { appliedAt: "2026-11-10" }
+  ];
+
+  assert.deepEqual(
+    buildApplicationActivity(applications, "2026-11-11T18:00:00Z", 4),
+    [
+      { date: "2026-11-08", label: "8 Nov", count: 1 },
+      { date: "2026-11-09", label: "9 Nov", count: 0 },
+      { date: "2026-11-10", label: "10 Nov", count: 2 },
+      { date: "2026-11-11", label: "11 Nov", count: 0 }
+    ]
+  );
+});
+
+test("buildApplicationActivity rejects invalid window sizes", () => {
+  assert.throws(() => buildApplicationActivity([], new Date(), 0), RangeError);
 });
