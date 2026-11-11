@@ -4,10 +4,12 @@ import {
   groupApplicationsByStage,
   stageLabels,
   stageOrder,
+  summarizeStageDistribution,
   summarizeApplications
 } from "./lib/dashboard.js";
 
 const summaryGrid = document.querySelector("#summary-grid");
+const stageDistribution = document.querySelector("#stage-distribution");
 const pipeline = document.querySelector("#pipeline");
 const cardTemplate = document.querySelector("#application-card-template");
 
@@ -43,6 +45,32 @@ function renderApplicationCard(application) {
   return fragment;
 }
 
+function renderStageDistribution() {
+  const distribution = summarizeStageDistribution(applications);
+
+  stageDistribution.replaceChildren(
+    ...distribution.map(({ label, count, percentage }) => {
+      const row = document.createElement("div");
+      row.className = "distribution-row";
+
+      const name = document.createElement("span");
+      name.textContent = label;
+      const progress = document.createElement("progress");
+      progress.max = applications.length || 1;
+      progress.value = count;
+      progress.setAttribute(
+        "aria-label",
+        `${label}: ${count} application${count === 1 ? "" : "s"}, ${percentage}% of pipeline`
+      );
+      const value = document.createElement("strong");
+      value.textContent = `${count} · ${percentage}%`;
+
+      row.append(name, progress, value);
+      return row;
+    })
+  );
+}
+
 function renderPipeline() {
   const groupedApplications = groupApplicationsByStage(applications);
   pipeline.replaceChildren(
@@ -64,4 +92,5 @@ document.querySelector("#as-of").textContent = `Updated ${new Intl.DateTimeForma
 }).format(new Date())}`;
 
 renderSummary();
+renderStageDistribution();
 renderPipeline();
