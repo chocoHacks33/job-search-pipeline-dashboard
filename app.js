@@ -1,5 +1,6 @@
 import { applications } from "./data.js";
 import {
+  filterApplications,
   formatShortDate,
   groupApplicationsByStage,
   stageLabels,
@@ -10,6 +11,8 @@ import {
 const summaryGrid = document.querySelector("#summary-grid");
 const pipeline = document.querySelector("#pipeline");
 const cardTemplate = document.querySelector("#application-card-template");
+const searchInput = document.querySelector("#application-search");
+const searchStatus = document.querySelector("#search-status");
 
 function renderSummary() {
   const summary = summarizeApplications(applications);
@@ -43,8 +46,8 @@ function renderApplicationCard(application) {
   return fragment;
 }
 
-function renderPipeline() {
-  const groupedApplications = groupApplicationsByStage(applications);
+function renderPipeline(visibleApplications = applications) {
+  const groupedApplications = groupApplicationsByStage(visibleApplications);
   pipeline.replaceChildren(
     ...stageOrder.map((stage) => {
       const column = document.createElement("section");
@@ -59,9 +62,17 @@ function renderPipeline() {
   );
 }
 
+function applySearch() {
+  const visibleApplications = filterApplications(applications, searchInput.value);
+  renderPipeline(visibleApplications);
+  searchStatus.textContent = `Showing ${visibleApplications.length} of ${applications.length} applications.`;
+}
+
 document.querySelector("#as-of").textContent = `Updated ${new Intl.DateTimeFormat("en-SG", {
   dateStyle: "medium"
 }).format(new Date())}`;
 
 renderSummary();
-renderPipeline();
+applySearch();
+
+searchInput.addEventListener("input", applySearch);
