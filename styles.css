@@ -77,6 +77,39 @@ main > section + section { margin-top: 2.75rem; }
 .metric-card strong { font-size: 2rem; letter-spacing: -0.04em; }
 .metric-card span { color: #63708a; font-size: 0.9rem; }
 
+.distribution-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.25rem;
+  border: 1px solid #dfe5f0;
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 18px 45px rgba(46, 64, 105, 0.06);
+}
+
+.distribution-row {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 0.8fr) minmax(8rem, 3fr) 5rem;
+  gap: 0.9rem;
+  align-items: center;
+  color: #5d6b86;
+  font-size: 0.82rem;
+}
+
+.distribution-row progress {
+  width: 100%;
+  height: 0.7rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: #e8edf5;
+}
+
+.distribution-row progress::-webkit-progress-bar { background: #e8edf5; }
+.distribution-row progress::-webkit-progress-value { background: #3d5afe; }
+.distribution-row progress::-moz-progress-bar { background: #3d5afe; }
+.distribution-row strong { color: #14213d; text-align: right; }
+
 .pipeline {
   display: grid;
   grid-template-columns: repeat(5, minmax(210px, 1fr));
@@ -113,4 +146,6 @@ main > section + section { margin-top: 2.75rem; }
 
 @media (max-width: 440px) {
   .summary-grid { grid-template-columns: 1fr; }
+  .distribution-row { grid-template-columns: 1fr 4rem; gap: 0.4rem 0.75rem; }
+  .distribution-row progress { grid-column: 1 / -1; grid-row: 2; }
 }
