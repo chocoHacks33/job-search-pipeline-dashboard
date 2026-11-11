@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import {
   formatShortDate,
   groupApplicationsByStage,
+  sortApplications,
   summarizeApplications
 } from "../lib/dashboard.js";
 
@@ -44,4 +45,26 @@ test("groupApplicationsByStage creates every dashboard column", () => {
 
 test("formatShortDate returns a concise local date", () => {
   assert.equal(formatShortDate("2026-11-09", "en-SG"), "9 Nov");
+});
+
+test("sortApplications orders records without mutating the source", () => {
+  const applications = [
+    { company: "Zeta", appliedAt: "2026-11-01", updatedAt: "2026-11-04" },
+    { company: "Alpha", appliedAt: "2026-11-03", updatedAt: "2026-11-02" },
+    { company: "Beta", appliedAt: "2026-11-02", updatedAt: "2026-11-03" }
+  ];
+
+  assert.deepEqual(
+    sortApplications(applications, "updated-asc").map(({ company }) => company),
+    ["Alpha", "Beta", "Zeta"]
+  );
+  assert.deepEqual(
+    sortApplications(applications, "applied-desc").map(({ company }) => company),
+    ["Alpha", "Beta", "Zeta"]
+  );
+  assert.equal(applications[0].company, "Zeta");
+});
+
+test("sortApplications rejects unknown sort modes", () => {
+  assert.throws(() => sortApplications([], "random"), RangeError);
 });
