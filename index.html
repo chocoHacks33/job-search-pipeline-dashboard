@@ -34,7 +34,17 @@
             <p class="eyebrow">Applications</p>
             <h2 id="pipeline-heading">Current opportunities</h2>
           </div>
+          <label class="search-control">
+            <span>Search applications</span>
+            <input
+              id="application-search"
+              type="search"
+              placeholder="Company, role, or location"
+              autocomplete="off"
+            />
+          </label>
         </div>
+        <p class="search-status" id="search-status" aria-live="polite"></p>
         <div class="pipeline" id="pipeline"></div>
       </section>
     </main>
